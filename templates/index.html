@@ -11,10 +11,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <title>Loja teste</title>
+    <title>Loja demo</title>
 </head>
 <nav class="navbar navbar-light bg-light mb-4">
-    <a class="navbar-brand" href="/">Loja teste</a>
+    <a class="navbar-brand" href="/">Loja demo</a>
 </nav>
 
 <body>
@@ -37,13 +37,16 @@
                             <td>{{.Descricao}}</td>
                             <td>{{.Preco}}</td>
                             <td>{{.Quantidade}}</td>
+                            <td><a href="/delete?id={{.ID}}" class="btn btn-danger">Excluir</a></td>
                         </tr>
                         {{end}}
                     </tbody>
                 </table>
             </div>
         </section>
-
+        <div class="card-footer">
+            <a href="/new" class="btn btn-primary mb-2">Novo produto</a>
+        </div>
     </div>
 </body>
 

@@ -14,6 +14,7 @@ type Produto struct {
 	Quantidade int
 }
 
+// ListarProdutos serve para listar os produtos do DB
 func ListarProdutos() []Produto {
 	db := db.ConectarDB()
 
@@ -35,6 +36,7 @@ func ListarProdutos() []Produto {
 			fmt.Println(err.Error())
 		}
 
+		p.ID = id
 		p.Nome = nome
 		p.Descricao = descricao
 		p.Preco = preco
@@ -45,4 +47,30 @@ func ListarProdutos() []Produto {
 
 	defer db.Close()
 	return produtos
+}
+
+// CriarProduto insere no banco
+func CriarProduto(nome string, descricao string, preco float64, quantidade int) {
+	db := db.ConectarDB()
+
+	inserirProduto, err := db.Prepare("INSERT INTO Produtos(nome, descricao, preco, quantidade) VALUES ($1, $2, $3, $4)")
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	inserirProduto.Exec(nome, descricao, preco, quantidade)
+	defer db.Close()
+}
+
+// ExcluirProduto exclui o produto do banco
+func ExcluirProduto(id string) {
+	db := db.ConectarDB()
+
+	deletarProduto, err := db.Prepare("DELETE FROM Produtos WHERE id = $1")
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	deletarProduto.Exec(id)
+	defer db.Close()
 }
