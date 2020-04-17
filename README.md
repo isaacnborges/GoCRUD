@@ -1,6 +1,8 @@
 # GoCRUD
 Projeto CRUD utilizando Golang
 
+Está rodando na porta 8000
+http://localhost:8000/
 
 Comando para rodar o projeto 
 - go run main.go
