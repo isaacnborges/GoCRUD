@@ -18,7 +18,7 @@ type Produto struct {
 func ListarProdutos() []Produto {
 	db := db.ConectarDB()
 
-	listarProdutos, err := db.Query("SELECT * FROM Produtos")
+	produtosDb, err := db.Query("SELECT * FROM Produtos ORDER BY Descricao")
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -26,12 +26,12 @@ func ListarProdutos() []Produto {
 	produtos := []Produto{}
 	p := Produto{}
 
-	for listarProdutos.Next() {
+	for produtosDb.Next() {
 		var id, quantidade int
 		var nome, descricao string
 		var preco float64
 
-		err = listarProdutos.Scan(&id, &nome, &descricao, &quantidade, &preco)
+		err = produtosDb.Scan(&id, &nome, &descricao, &preco, &quantidade)
 		if err != nil {
 			fmt.Println(err.Error())
 		}
@@ -49,6 +49,38 @@ func ListarProdutos() []Produto {
 	return produtos
 }
 
+// ObterProduto para obter um produto específico
+func ObterProduto(id string) Produto {
+	db := db.ConectarDB()
+
+	produtoDb, err := db.Query("SELECT * FROM Produtos WHERE id = $1", id)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	produto := Produto{}
+
+	for produtoDb.Next() {
+		var id, quantidade int
+		var nome, descricao string
+		var preco float64
+
+		err = produtoDb.Scan(&id, &nome, &descricao, &preco, &quantidade)
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+
+		produto.ID = id
+		produto.Nome = nome
+		produto.Descricao = descricao
+		produto.Preco = preco
+		produto.Quantidade = quantidade
+	}
+
+	defer db.Close()
+	return produto
+}
+
 // CriarProduto insere no banco
 func CriarProduto(nome string, descricao string, preco float64, quantidade int) {
 	db := db.ConectarDB()
@@ -59,6 +91,19 @@ func CriarProduto(nome string, descricao string, preco float64, quantidade int) 
 	}
 
 	inserirProduto.Exec(nome, descricao, preco, quantidade)
+	defer db.Close()
+}
+
+// EditarProduto editar um produto no banco
+func EditarProduto(id int, nome string, descricao string, preco float64, quantidade int) {
+	db := db.ConectarDB()
+
+	editarProduto, err := db.Prepare("UPDATE Produtos SET nome=$1, descricao=$2, preco=$3, quantidade=$4 WHERE id=$5")
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+
+	editarProduto.Exec(nome, descricao, preco, quantidade, id)
 	defer db.Close()
 }
 

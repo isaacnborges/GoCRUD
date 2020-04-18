@@ -24,7 +24,8 @@
                             <td>{{.Descricao}}</td>
                             <td>{{.Preco}}</td>
                             <td>{{.Quantidade}}</td>
-                            <td><button onclick="onDelete('{{.ID}}')" class="btn btn-danger">Remover</button></td>
+                            <td><a href="get?id={{.ID}}" class="btn btn-info">Editar</a></td>
+                            <td><button onclick="onDelete('{{.ID}}')" class="btn btn-danger">Excluir</button></td>
                         </tr>
                         {{end}}
                     </tbody>
@@ -39,7 +40,7 @@
 
 <script>
     function onDelete(id) {
-        let resposta = confirm("Tem certeza que deseja remover?")
+        let resposta = confirm("Tem certeza que deseja excluir?")
         if (resposta) {
             window.location = "/delete?id=" + id
         }

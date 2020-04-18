@@ -8,7 +8,7 @@ Comando para rodar o projeto
 - go run main.go
 
 Necessário instalar o bando de dados postgresql
-
+Administrador Banco de dados: pgAdmin
 Base de dados: loja_demo
 
 CREATE TABLE Produtos (
