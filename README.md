@@ -1,15 +1,17 @@
 # GoCRUD
 Projeto CRUD utilizando Golang
 
-Está rodando na porta 8000
-http://localhost:8000/
+Porta 8000 para rodar o projeto: http://localhost:8000/
 
 Comando para rodar o projeto 
 - go run main.go
 
 Necessário instalar o bando de dados postgresql
+
 Administrador Banco de dados: pgAdmin
+
 Base de dados: loja_demo
+
 
 CREATE TABLE Produtos (
 	id serial primary key,
