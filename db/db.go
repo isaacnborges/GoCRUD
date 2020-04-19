@@ -2,9 +2,6 @@ package db
 
 import (
 	"database/sql"
-
-	// Utilizado para realizar a conexao com banco
-	_ "github.com/lib/pq"
 )
 
 // ConectarDB é conexão com banco postgres

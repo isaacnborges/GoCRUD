@@ -18,7 +18,7 @@ type Produto struct {
 func ListarProdutos() []Produto {
 	db := db.ConectarDB()
 
-	produtosDb, err := db.Query("SELECT * FROM Produtos ORDER BY Descricao")
+	produtosDb, err := db.Query("SELECT * FROM Produtos ORDER BY Nome")
 	if err != nil {
 		fmt.Println(err.Error())
 	}
